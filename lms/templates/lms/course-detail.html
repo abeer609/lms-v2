@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+  <div class="col-lg-5">
+    <div class="card">
+      <img class="card-img-top" src="{{course.cover_image}}" alt="" srcset="" />
+      <div class="px-4">
+        {% if not is_enrolled %}
+        <form method="post">
+          {% csrf_token %}
+          <button class="w-100 my-4 btn btn-outline-primary">Enroll now</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">{{course.title}}</h3>
+        <p class="card-text text-secondary">{{course.description}}</p>
+        <p class="card-text">
+          Teacher: <span class="fw-bold">{{course.teacher.username}}</span>
+        </p>
+      </div>
+    </div>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h4>Course Content</h4>
+        <ul>
+          {% for i in course.chapter_set.all %}
+          {% if is_enrolled %}
+            <li>{{i.title}}</li>
+            <p>{{i.description}}</p>
+            <a href="{{i.attachment.url}}">{{i.attachment}}</a>
+          {% else %}
+            <li>{{i.title}}</li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

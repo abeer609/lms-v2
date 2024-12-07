@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %} {% load static %} {% if messages%}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible" role="alert">
+  {{message}}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %} {% endif %}
+<div class="row g-4">
+  {% for course in courses %}
+  <div class="col-sm-6 col-lg-4 col-xl-3">
+    <div class="card">
+      <!-- <img src="{% static 'library/1.jpg' %}" class="card-img-top" alt="..." /> -->
+      <img class="card-top-image" src="{{course.cover_image}}" alt="" />
+      <div class="card-body">
+        <a
+          class="link-offset-2 text-dark link-underline link-underline-opacity-0"
+          href="/courses/{{course.id}}/"
+          ><p class="text-bold m-0">{{course.title}}</p></a
+        >
+        <p class="text-secondary mt-2">{{course.teacher.username}}</p>
+      </div>
+    </div>
+  </div>
+  {%endfor %}
+</div>
+
+<script>
+  setTimeout(function () {
+    bootstrap.Alert.getOrCreateInstance(
+      document.querySelector(".alert")
+    ).close();
+  }, 2000);
+</script>
+
+{% endblock %}
